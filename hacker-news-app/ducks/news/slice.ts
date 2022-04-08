@@ -1,18 +1,22 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { asyncFetchNews } from './asyncActions';
 
 
-export type NewsState = {
+export type NewsContentState = {
   title: string;
   content: string;
-  loading: boolean;
-  error: boolean;
-  errorMessage: string;
+  url: string;
 }
 
+export type NewsState = {
+  news: NewsContentState[],
+  loading: false,
+  error: false,
+  errorMessage: string
+}
 
 export const initialState: NewsState = {
-  title: '',
-  content: '',
+  news: [],
   loading: false,
   error: false,
   errorMessage: '',
@@ -25,6 +29,11 @@ const newsSlice = createSlice({
     // TODO: news検索処理等を作る
   },
   extraReducers: (builder) => {
-    
+    builder.addCase(asyncFetchNews.pending, (state) => {
+      return {
+        ...state,
+
+      }
+    })
   }
 })
