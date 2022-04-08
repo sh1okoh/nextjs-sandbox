@@ -14,3 +14,16 @@ export const asyncIncrementCounter = createAsyncThunk<number, number>(
     return arg;
   }
 )
+
+export const asyncDecrementCounter = createAsyncThunk<number, number>(
+  'counter/asyncDecrementCountre',
+  async(arg: number): Promise<number> => {
+    await sleep(1000);
+    const randNum = Math.floor(Math.random() * Math.floor(10));
+    if (randNum === 0 || randNum === 5 || randNum === 1) {
+      return Promise.reject(new Error('asyncDecrementCounter error'));
+    }
+
+    return arg;
+  }
+)

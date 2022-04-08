@@ -27,6 +27,9 @@ const CounterPage: React.FC = () => {
     await dispatch(asyncIncrementCounter(10))
   }
 
+  const onClickAsyncDecrement = async () => {
+  }
+
   return (
     <>
       <button type='button' onClick={onClickIncrement}>
@@ -41,6 +44,12 @@ const CounterPage: React.FC = () => {
       disabled={state.loading}
       >
         非同期で増やす
+      </button>
+      <button
+      type='button'
+      onClick={onClickAsyncDecrement}
+      disabled={state.loading}
+      >
       </button>
       <p>ねこが{state.count}匹いる</p>
       { state.loading ? <p>通信中</p> : '' }
