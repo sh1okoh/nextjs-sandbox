@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import counterSlice from '../ducks/counter/slice';
 import { useCounterState } from '../ducks/counter/selectors';
-import { asyncIncrementCounter } from '../ducks/counter/asyncActions';
+import { asyncDecrementCounter, asyncIncrementCounter } from '../ducks/counter/asyncActions';
 
 
 const StyledMessage = styled.p`
@@ -28,6 +28,7 @@ const CounterPage: React.FC = () => {
   }
 
   const onClickAsyncDecrement = async () => {
+    await dispatch(asyncDecrementCounter(10))
   }
 
   return (
@@ -50,6 +51,7 @@ const CounterPage: React.FC = () => {
       onClick={onClickAsyncDecrement}
       disabled={state.loading}
       >
+        非同期で減らす
       </button>
       <p>ねこが{state.count}匹いる</p>
       { state.loading ? <p>通信中</p> : '' }
