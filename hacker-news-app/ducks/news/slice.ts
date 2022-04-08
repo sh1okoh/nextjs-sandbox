@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { asyncFetchNews } from './asyncActions';
-
 
 export type NewsContentState = {
   title: string;
@@ -10,8 +9,8 @@ export type NewsContentState = {
 
 export type NewsState = {
   news: NewsContentState[],
-  loading: false,
-  error: false,
+  loading: boolean,
+  error: boolean,
   errorMessage: string
 }
 
@@ -32,8 +31,29 @@ const newsSlice = createSlice({
     builder.addCase(asyncFetchNews.pending, (state) => {
       return {
         ...state,
-
       }
-    })
+    });
+    builder.addCase(
+      asyncFetchNews.rejected,
+      (state, action: RejectedAction<string>) => {
+        return {
+          ...state,
+          loading: false,
+          error: true,
+          errorMessage: action.error.message,
+        };
+      },
+    );
+    builder.addCase(
+      asyncFetchNews.fulfilled,
+      (state: NewsState, action: PayloadAction<string>) => {
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          errorMessage: '',
+        }
+      }
+    );
   }
 })
